@@ -57,7 +57,7 @@ extern "C" { // Make sure we have C-declarations in C++ programs
  * Create and return a NeoPixel strip object. Example:
  * ```c
  * struct mgos_neopixel *mystrip = mgos_neopixel_create(
- *     5, 16, MGOS_NEOPIXEL_ORDER_GRB);
+ *     5, 16, MGOS_NEOPIXEL_ORDER_GRB, 3);
  * mgos_neopixel_set(mystrip, 0, 12, 34, 56);
  * mgos_neopixel_show(mystrip);
  *
@@ -66,14 +66,7 @@ extern "C" { // Make sure we have C-declarations in C++ programs
  * mgos_neopixel_show(mystrip);
  * ```
  */
-struct mgos_neopixel* mgos_neopixel_create(int pin, int num_pixels, enum mgos_neopixel_order order);
-
-/*
- * Same as `mgos_neopixel_create`, except that a `channel`parameter is added
- * which describes the number of colors/channels used in the LED - this defines
- * the memory space needed (e.g. APA102 has 4 channels - RGB plus Brightness)
- */
-struct mgos_neopixel* mgos_neopixel_create_channeled(int pin, int num_pixels, enum mgos_neopixel_order order, int num_channels);
+struct mgos_neopixel* mgos_neopixel_create(int pin, int num_pixels, enum mgos_neopixel_order order, int num_channels);
 
 /*
  * Set i-th pixel's RGB value. Each color (`r`, `g`, `b`) should be an integer

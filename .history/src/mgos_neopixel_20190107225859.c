@@ -27,12 +27,8 @@
 #include "mgos_config.h"
 #include "mgos.h"
 
-struct mgos_neopixel* mgos_neopixel_create(int pin, int num_pixels, enum mgos_neopixel_order order)
-{
-    return mgos_neopixel_create_channeled(pin, num_pixels, order, 3);
-}
-
-struct mgos_neopixel* mgos_neopixel_create_channeled(int pin, int num_pixels, enum mgos_neopixel_order order, int num_channels)
+struct mgos_neopixel* mgos_neopixel_create(int pin, int num_pixels,
+    enum mgos_neopixel_order order, int num_channels)
 {
     mgos_gpio_set_mode(pin, MGOS_GPIO_MODE_OUTPUT);
     /* Keep in reset */

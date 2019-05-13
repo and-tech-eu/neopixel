@@ -19,39 +19,24 @@
 #define CS_MOS_LIBS_NEOPIXEL_INCLUDE_MGOS_NEOPIXEL_H_
 
 #include <stdbool.h>
-#include <stdint.h>
+
+#if defined(__cplusplus)
+extern "C" {  // Make sure we have C-declarations in C++ programs
+#endif
 
 /*
  * Pixel order: RGB, GRB, or BGR.
  */
 enum mgos_neopixel_order {
-    MGOS_NEOPIXEL_ORDER_RGB,
-    MGOS_NEOPIXEL_ORDER_GRB,
-    MGOS_NEOPIXEL_ORDER_BGR,
+  MGOS_NEOPIXEL_ORDER_RGB,
+  MGOS_NEOPIXEL_ORDER_GRB,
+  MGOS_NEOPIXEL_ORDER_BGR,
 };
 
-struct mgos_neopixel_timing {
-    uint8_t T0H;
-    uint8_t T1H;
-    uint8_t T0L;
-    uint8_t T1L;
-    uint8_t RES;
-};
-
-struct mgos_neopixel_timing global_timing;
-
-struct mgos_neopixel {
-    int pin;
-    int num_pixels;
-    int num_channels;
-    enum mgos_neopixel_order order;
-    uint8_t* data;
-    struct mgos_neopixel_timing *timing;
-};
-
-#if defined(__cplusplus)
-extern "C" { // Make sure we have C-declarations in C++ programs
-#endif
+/*
+ * Opaque neopixel instance
+ */
+struct mgos_neopixel;
 
 /*
  * Create and return a NeoPixel strip object. Example:
@@ -66,14 +51,8 @@ extern "C" { // Make sure we have C-declarations in C++ programs
  * mgos_neopixel_show(mystrip);
  * ```
  */
-struct mgos_neopixel* mgos_neopixel_create(int pin, int num_pixels, enum mgos_neopixel_order order);
-
-/*
- * Same as `mgos_neopixel_create`, except that a `channel`parameter is added
- * which describes the number of colors/channels used in the LED - this defines
- * the memory space needed (e.g. APA102 has 4 channels - RGB plus Brightness)
- */
-struct mgos_neopixel* mgos_neopixel_create_channeled(int pin, int num_pixels, enum mgos_neopixel_order order, int num_channels);
+struct mgos_neopixel *mgos_neopixel_create(int pin, int num_pixels,
+                                           enum mgos_neopixel_order order, int num_channels);
 
 /*
  * Set i-th pixel's RGB value. Each color (`r`, `g`, `b`) should be an integer
@@ -82,22 +61,22 @@ struct mgos_neopixel* mgos_neopixel_create_channeled(int pin, int num_pixels, en
  * Note that this only affects in-memory value of the pixel; you'll need to
  * call `mgos_neopixel_show()` to apply changes.
  */
-void mgos_neopixel_set(struct mgos_neopixel* np, int i, int r, int g, int b);
+void mgos_neopixel_set(struct mgos_neopixel *np, int i, int r, int g, int b);
 
 /*
  * Clear in-memory values of the pixels.
  */
-void mgos_neopixel_clear(struct mgos_neopixel* np);
+void mgos_neopixel_clear(struct mgos_neopixel *np);
 
 /*
  * Output values of the pixels.
  */
-void mgos_neopixel_show(struct mgos_neopixel* np);
+void mgos_neopixel_show(struct mgos_neopixel *np);
 
 /*
  * Free neopixel instance.
  */
-void mgos_neopixel_free(struct mgos_neopixel* np);
+void mgos_neopixel_free(struct mgos_neopixel *np);
 
 #if defined(__cplusplus)
 }
